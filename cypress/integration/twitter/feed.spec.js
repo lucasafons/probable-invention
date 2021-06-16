@@ -18,29 +18,24 @@
 
  */    
 describe('Twitter clone', () => {
+  context('Feed', () => {
+      //hooks - trechos
+      beforeEach(() => {
+        cy.intercept({
+          // mapeamento da rota ou requisição
+          method: 'GET',
+          hostname: 'res.cloudinary.com'
+        }, {
+          // resposta que eu quero simular
+          statusCode: 200,
+          fixture: 'gato'
+        })
+      
+        cy.login()
   
-  //hooks - trechos
-  beforeEach(() => {
-    cy.intercept({
-      // mapeamento da rota ou requisição
-      method: 'GET',
-      hostname: 'res.cloudinary.com'
-    }, {
-      // resposta que eu quero simular
-      statusCode: 200,
-      fixture: 'gato'
-    })
-    
-    cy.login()
-
-  });
-    
-  context('Feed', () =>{
+      });
       it('Quando estiver autenticado, devo visualizar o menu navegável', () => {
-
-        
-        
-        cy.visit('https://twitter-clone-example.herokuapp.com/')
+        cy.visit('/')
 
         cy.get('nav ul li')
           .should('be.visible')
